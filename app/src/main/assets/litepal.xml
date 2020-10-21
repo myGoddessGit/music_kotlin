@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<litepal>
+    <dbname value = "SongList"/>
+    <version value = "27"/>
+    <list>
+        <mapping class="com.music.kotlinqq.bean.OnlineSong"/>
+        <mapping class="com.music.kotlinqq.bean.LocalSong" />
+        <mapping class="com.music.kotlinqq.bean.SearchHistory" />
+        <mapping class="com.music.kotlinqq.bean.Love" />
+        <mapping class="com.music.kotlinqq.bean.HistorySong" />
+        <mapping class="com.music.kotlinqq.bean.AlbumCollection" />
+        <mapping class="com.music.kotlinqq.bean.DownloadSong" />
+        <mapping class="com.music.kotlinqq.bean.DownloadInfo"/>
+        <mapping class="com.music.kotlinqq.bean.Song"/>
+    </list>
+</litepal>
