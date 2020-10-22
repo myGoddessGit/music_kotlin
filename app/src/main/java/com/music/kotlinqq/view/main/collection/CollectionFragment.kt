@@ -81,25 +81,24 @@ class CollectionFragment : AttachFragment(){
         recycler_love_songs.setHasFixedSize(true)
         mLoveList?.addAll(orderList(LitePal.findAll(Love::class.java)))
         recycler_love_songs.layoutManager = layoutManager
-        mAdapter.setOnItemClickListener(object : OnItemClickListener{
-            override fun onClick(position: Int) {
-                val love = mLoveList!![position]
-                val song = Song()
-                song.songId = love.songId
-                song.qqId = love.qqId
-                song.songName = love.name
-                song.singer = love.singer
-                song.isOnline = love.isOnline
-                song.url = love.url
-                song.imgUrl = love.pic
-                song.position = position
-                song.duration = love.duration
-                song.mediaId = love.mediaId
-                song.listType = Constant.LIST_TYPE_LOVE
-                FileUtil.saveSong(song)
-                mPlayStatusBinder?.play(Constant.LIST_TYPE_LOVE)
-            }
-        })
+        mAdapter.setOnItemClickListener{
+            tag: Int ->
+            val love = mLoveList!![tag]
+            val song = Song()
+            song.songId = love.songId
+            song.qqId = love.qqId
+            song.songName = love.name
+            song.singer = love.singer
+            song.isOnline = love.isOnline
+            song.url = love.url
+            song.imgUrl = love.pic
+            song.position = tag
+            song.duration = love.duration
+            song.mediaId = love.mediaId
+            song.listType = Constant.LIST_TYPE_LOVE
+            FileUtil.saveSong(song)
+            mPlayStatusBinder?.play(Constant.LIST_TYPE_LOVE)
+        }
     }
 
     private fun onClick(){

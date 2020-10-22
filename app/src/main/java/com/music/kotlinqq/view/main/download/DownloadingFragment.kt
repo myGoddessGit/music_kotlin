@@ -66,30 +66,25 @@ class DownloadingFragment : AttachFragment(){
         songDowningRecycle.layoutManager = layoutManager
         songDowningRecycle.adapter = mAdapter
         // 暂停
-        mAdapter.setOnItemClickListener(object : OnItemClickListener{
-            override fun onClick(position: Int) {
-                val downloadInfo = mDownloadInfoList!![position]
-                LogUtils.d("DownloadingFragment", mDownloadInfoList!![position].status)
-                if (downloadInfo.status == Constant.TYPE_DOWNLOAD_PAUSED) {
-                    mDownloadBinder?.startDownload(downloadInfo)
-                } else {
-                    mDownloadBinder?.pauseDownload(downloadInfo.songId)
-                }
+        mAdapter.setOnItemClickListener{
+            tag: Int ->
+            val downloadInfo = mDownloadInfoList!![tag]
+            LogUtils.d("DownloadingFragment", mDownloadInfoList!![tag].status)
+            if (downloadInfo.status == Constant.TYPE_DOWNLOAD_PAUSED) {
+                mDownloadBinder?.startDownload(downloadInfo)
+            } else {
+                mDownloadBinder?.pauseDownload(downloadInfo.songId)
             }
-        })
+        }
         // 取消下载
-        mAdapter.setOnDeleteClickListener(object : OnDeleteClickListener{
-            override fun onClick(position: Int) {
-                val speedDialog = SpeedDialog(attachActivity, SpeedDialog.SELECT_TYPE)
-                speedDialog.setTitle("取消下载")
-                    .setMessage("确定不再下载吗")
-                    .setSureText("删除")
-                    .setSureClickListener {
-                        mDownloadBinder?.cancelDownload(mDownloadInfoList!![position])
-                    }
-                    .show()
-            }
-        })
+        mAdapter.setOnDeleteClickListener{
+            tag: Int ->
+            val speedDialog = SpeedDialog(attachActivity, SpeedDialog.SELECT_TYPE)
+            speedDialog.setTitle("取消下载")
+                .setMessage("确定不再下载吗")
+                .setSureText("删除")
+                .setSureClickListener {mDownloadBinder?.cancelDownload(mDownloadInfoList!![tag])}.show()
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

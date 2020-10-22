@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andexert.library.RippleView
 import com.music.kotlinqq.R
 import com.music.kotlinqq.bean.Love
-import com.music.kotlinqq.callback.OnItemClickListener
 import com.music.kotlinqq.util.FileUtil
 import kotlinx.android.synthetic.main.recycler_song_search_item.view.*
 
@@ -23,9 +22,9 @@ class LoveSongAdapter(private val mLoveList : MutableList<Love>, private val mCo
     private val footerViewType = 1
     private val itemViewType = 0
     private var mLastPosition = -1
-    private var mOnItemClickListener : OnItemClickListener? = null
+    private var mOnItemClickListener : ((tag : Int) -> Unit)? = null
 
-    fun setOnItemClickListener(onItemClickListener: OnItemClickListener){
+    fun setOnItemClickListener(onItemClickListener: (tag : Int) -> Unit){
         this.mOnItemClickListener = onItemClickListener
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -68,7 +67,7 @@ class LoveSongAdapter(private val mLoveList : MutableList<Love>, private val mCo
             }
             holder.item.setOnRippleCompleteListener {
                 if (mOnItemClickListener != null){
-                    mOnItemClickListener!!.onClick(position)
+                    mOnItemClickListener!!.invoke(position)
                 }
                 equalPosition(position)
             }

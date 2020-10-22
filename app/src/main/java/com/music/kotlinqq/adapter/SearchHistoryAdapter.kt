@@ -9,9 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andexert.library.RippleView
 import com.music.kotlinqq.R
 import com.music.kotlinqq.bean.SearchHistory
-import com.music.kotlinqq.callback.OnDeleteClickListener
-import com.music.kotlinqq.callback.OnFooterClickListener
-import com.music.kotlinqq.callback.OnItemClickListener
 import kotlinx.android.synthetic.main.recycler_seek_history_item.view.*
 
 /**
@@ -22,19 +19,20 @@ class SearchHistoryAdapter(private val mSearchHistoryList : MutableList<SearchHi
 
     private val mHistoryType = 0
     private val mFooterType = 1
-    private var mOnItemClickListener : OnItemClickListener? = null
-    private var mOnDeleteClickListener : OnDeleteClickListener? = null
-    private var mFooterClickListener : OnFooterClickListener? = null
+    private var mOnItemClickListener : ((tag : Int) -> Unit)? = null
+    private var mOnDeleteClickListener : ((tag : Int) -> Unit)? = null
+    private var mFooterClickListener : (() -> Unit)? = null
 
-    fun setOnItemClickListener(onItemClickListener : OnItemClickListener){
+
+    fun setOnItemClickListener(onItemClickListener : (tag : Int) -> Unit){
         mOnItemClickListener = onItemClickListener
     }
 
-    fun setOnDeleteClickListener(onDeleteClickListener : OnDeleteClickListener){
+    fun setOnDeleteClickListener(onDeleteClickListener : (tag : Int) -> Unit){
         mOnDeleteClickListener = onDeleteClickListener
     }
 
-    fun setFooterClickListener(onFooterClickListener: OnFooterClickListener){
+    fun setFooterClickListener(onFooterClickListener: () -> Unit){
         mFooterClickListener = onFooterClickListener
     }
 
@@ -64,15 +62,15 @@ class SearchHistoryAdapter(private val mSearchHistoryList : MutableList<SearchHi
            val historyHolder = holder as HistoryHolder
            historyHolder.historyTv.text = mSearchHistoryList[position].history
            historyHolder.deleteTv.setOnClickListener {
-               mOnDeleteClickListener!!.onClick(position)
+               mOnDeleteClickListener!!.invoke(position)
            }
            historyHolder.mItemView.setOnRippleCompleteListener {
-               mOnItemClickListener!!.onClick(position)
+               mOnItemClickListener!!.invoke(position)
            }
        } else {
            val footerHolder = holder as FooterHolder
            footerHolder.itemView.setOnClickListener {
-               mFooterClickListener!!.onClick()
+               mFooterClickListener!!.invoke()
            }
        }
     }

@@ -10,7 +10,6 @@ import android.widget.TextView
 import com.andexert.library.RippleView
 import com.music.kotlinqq.R
 import com.music.kotlinqq.bean.AlbumCollection
-import com.music.kotlinqq.callback.OnChildItemClickListener
 import com.music.kotlinqq.util.CommonUtil
 import kotlinx.android.synthetic.main.item_first.view.*
 import kotlinx.android.synthetic.main.item_second.view.*
@@ -22,9 +21,12 @@ import kotlinx.android.synthetic.main.item_second.view.*
  */
 class ExpandableListViewAdapter(private val mContext : Context, private val mGroupStrings : Array<String>, private val mAlbumCollectionList : MutableList<MutableList<AlbumCollection>>) : BaseExpandableListAdapter() {
 
-    private var mChildClickListener : OnChildItemClickListener? = null
+    /**
+     * 函数可以作为参数
+     */
+    private var mChildClickListener : ((tag1 : Int, tag2 : Int) -> Unit)? = null
 
-    fun setOnChildItemClickListener(onChildItemClickListener: OnChildItemClickListener){
+    fun setOnChildItemClickListener(onChildItemClickListener: (tag1 : Int, tag2 : Int) -> Unit){
         this.mChildClickListener = onChildItemClickListener
     }
     override fun getGroup(groupPosition: Int): Any {
@@ -100,7 +102,7 @@ class ExpandableListViewAdapter(private val mContext : Context, private val mGro
         childViewHolder.authorTv!!.text = mAlbumCollectionList[groupPosition][childPosition].singerName
         CommonUtil.setImgWithGlide(mContext, mAlbumCollectionList[groupPosition][childPosition].albumPic, childViewHolder.faceIv!!)
         childViewHolder.childView!!.setOnRippleCompleteListener {
-            mChildClickListener!!.onClick(groupPosition, childPosition)
+            mChildClickListener!!.invoke(groupPosition, childPosition)
         }
         return view
     }

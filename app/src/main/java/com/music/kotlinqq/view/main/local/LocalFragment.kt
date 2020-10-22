@@ -95,22 +95,21 @@ class LocalFragment : BaseMvpFragment<LocalPresenter>(), ILocalContract.View {
         linear_empty.visibility = View.GONE
         normalView.layoutManager = layoutManager
         normalView.adapter = songAdapter
-        songAdapter.setOnItemClickListener(object : OnItemClickListener{
-            override fun onClick(position: Int) {
-                val mp3Info = mLocalSongList[position]
-                val song = Song()
-                song.songName = mp3Info.name
-                song.singer = mp3Info.singer
-                song.url = mp3Info.url
-                song.duration = mp3Info.duration
-                song.position = position
-                song.isOnline = false
-                song.songId = mp3Info.songId
-                song.listType = Constant.LIST_TYPE_LOCAL
-                FileUtil.saveSong(song)
-                mPlayStatusBinder?.play(Constant.LIST_TYPE_LOCAL)
-            }
-        })
+        songAdapter.setOnItemClickListener{
+            tag: Int ->
+            val mp3Info = mLocalSongList[tag]
+            val song = Song()
+            song.songName = mp3Info.name
+            song.singer = mp3Info.singer
+            song.url = mp3Info.url
+            song.duration = mp3Info.duration
+            song.position = tag
+            song.isOnline = false
+            song.songId = mp3Info.songId
+            song.listType = Constant.LIST_TYPE_LOCAL
+            FileUtil.saveSong(song)
+            mPlayStatusBinder?.play(Constant.LIST_TYPE_LOCAL)
+        }
     }
 
     override fun showErrorView() {
@@ -138,22 +137,21 @@ class LocalFragment : BaseMvpFragment<LocalPresenter>(), ILocalContract.View {
             if (FileUtil.getSong() != null){
                 layoutManager.scrollToPositionWithOffset(FileUtil.getSong()!!.position - 4, normalView.height)
             }
-            songAdapter.setOnItemClickListener(object : OnItemClickListener{
-                override fun onClick(position: Int) {
-                    val mp3Info = mLocalSongList!![position]
-                    val song = Song()
-                    song.songName = mp3Info.name
-                    song.singer = mp3Info.singer
-                    song.url = mp3Info.url
-                    song.duration = mp3Info.duration
-                    song.position = position
-                    song.isOnline = false
-                    song.songId = mp3Info.songId
-                    song.listType = Constant.LIST_TYPE_LOCAL
-                    FileUtil.saveSong(song)
-                    mPlayStatusBinder?.play(Constant.LIST_TYPE_LOCAL)
-                }
-            })
+            songAdapter.setOnItemClickListener{
+                tag: Int ->
+                val mp3Info = mLocalSongList[tag]
+                val song = Song()
+                song.songName = mp3Info.name
+                song.singer = mp3Info.singer
+                song.url = mp3Info.url
+                song.duration = mp3Info.duration
+                song.position = tag
+                song.isOnline = false
+                song.songId = mp3Info.songId
+                song.listType = Constant.LIST_TYPE_LOCAL
+                FileUtil.saveSong(song)
+                mPlayStatusBinder?.play(Constant.LIST_TYPE_LOCAL)
+            }
         }
     }
     private fun onClick(){

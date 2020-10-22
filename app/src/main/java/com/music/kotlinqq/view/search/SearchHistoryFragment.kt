@@ -43,34 +43,19 @@ class SearchHistoryFragment : AttachFragment(){
     }
 
     private fun onClick(){
-        mAdapter.setFooterClickListener(object : OnFooterClickListener{
-            override fun onClick() {
-                val speedDialog = SpeedDialog(attachActivity)
-                speedDialog.setTitle("删除")
-                    .setMessage("确定清空所有的搜索历史吗?")
-                    .setSureClickListener {
-                        LitePal.deleteAll(SearchHistory::class.java)
-                        recycler_seek_history.visibility = View.GONE
-                    }
-                    .show()
-            }
-        })
-        mAdapter.setOnDeleteClickListener(object : OnDeleteClickListener {
-            override fun onClick(position: Int) {
-                val searchHistory = mSearchHistoryList!![position]
-                if (searchHistory.isSaved){
-                    searchHistory.delete()
-                }
-                mTempList = LitePal.findAll(SearchHistory::class.java)
-                changeList()
-                mAdapter.notifyDataSetChanged()
-            }
-        })
-        mAdapter.setOnItemClickListener(object : OnItemClickListener{
-            override fun onClick(position: Int) {
-                (parentFragment as AlbumContentFragment.SearchFragment).setSeekEdit(mSearchHistoryList!![position].history)
-            }
-        })
+        mAdapter.setFooterClickListener{
+            val speedDialog = SpeedDialog(attachActivity)
+            speedDialog.setTitle("删除")
+                .setMessage("确定清空所有的搜索历史吗?")
+                .setSureClickListener {
+                    LitePal.deleteAll(SearchHistory::class.java)
+                    recycler_seek_history.visibility = View.GONE }.show()
+        }
+        mAdapter.setOnDeleteClickListener{}
+        mAdapter.setOnItemClickListener{
+            tag: Int ->
+            (parentFragment as AlbumContentFragment.SearchFragment).setSeekEdit(mSearchHistoryList!![tag].history)
+        }
     }
 
     private fun changeList(){

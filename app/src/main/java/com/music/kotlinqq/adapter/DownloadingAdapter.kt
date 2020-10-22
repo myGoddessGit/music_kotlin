@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.music.kotlinqq.R
 import com.music.kotlinqq.app.Constant
 import com.music.kotlinqq.bean.DownloadInfo
-import com.music.kotlinqq.callback.OnDeleteClickListener
-import com.music.kotlinqq.callback.OnItemClickListener
 import com.music.kotlinqq.util.MediaUtil
 import kotlinx.android.synthetic.main.recycler_downing_item.view.*
 
@@ -23,14 +21,15 @@ import kotlinx.android.synthetic.main.recycler_downing_item.view.*
  */
 class DownloadingAdapter(private val downloadInfoList : MutableList<DownloadInfo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var onItemClickListener : OnItemClickListener? = null
-    private var onDeleteClickListener : OnDeleteClickListener? = null
+    private var onItemClickListener : ((tag : Int) -> Unit)? = null
 
-    fun setOnDeleteClickListener(onDeleteClickListener: OnDeleteClickListener){
+    private var onDeleteClickListener : ((tag : Int) -> Unit)? = null
+
+    fun setOnDeleteClickListener(onDeleteClickListener: (tag : Int) -> Unit){
         this.onDeleteClickListener = onDeleteClickListener
     }
 
-    fun setOnItemClickListener(onItemClickListener: OnItemClickListener){
+    fun setOnItemClickListener(onItemClickListener : (tag : Int) -> Unit){
         this.onItemClickListener = onItemClickListener
     }
 
@@ -76,11 +75,11 @@ class DownloadingAdapter(private val downloadInfoList : MutableList<DownloadInfo
             _, _ -> true
         }
         holder.itemView.setOnClickListener {
-            onItemClickListener!!.onClick(i)
+            onItemClickListener!!.invoke(i)
         }
         // 取消
         holder.cancelTv.setOnClickListener {
-            onDeleteClickListener!!.onClick(i)
+            onDeleteClickListener!!.invoke(i)
         }
     }
 

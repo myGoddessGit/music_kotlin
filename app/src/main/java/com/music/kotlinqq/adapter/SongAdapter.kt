@@ -11,10 +11,8 @@ import com.andexert.library.RippleView
 import com.music.kotlinqq.R
 import com.music.kotlinqq.app.App
 import com.music.kotlinqq.bean.LocalSong
-import com.music.kotlinqq.callback.OnItemClickListener
 import com.music.kotlinqq.util.FileUtil
 import kotlinx.android.synthetic.main.footer_local_songs_item.view.*
-import kotlinx.android.synthetic.main.fragment_love.view.*
 import kotlinx.android.synthetic.main.recycler_song_item.view.*
 
 /**
@@ -26,9 +24,9 @@ class SongAdapter(private val mMp3InfoList : MutableList<LocalSong>) : RecyclerV
     private var footerViewType = 1
     private var itemViewType = 0
     private var mLastPosition = -1
-    private var onItemClickListener : OnItemClickListener? = null
+    private var onItemClickListener : ((tag : Int) -> Unit)? = null
 
-    fun setOnItemClickListener(onItemClickListener: OnItemClickListener){
+    fun setOnItemClickListener(onItemClickListener: (tag : Int) -> Unit){
         this.onItemClickListener = onItemClickListener
     }
 
@@ -72,7 +70,7 @@ class SongAdapter(private val mMp3InfoList : MutableList<LocalSong>) : RecyclerV
                 holder.playingIv.visibility = View.GONE
             }
             holder.songView.setOnRippleCompleteListener {
-                onItemClickListener!!.onClick(position)
+                onItemClickListener!!.invoke(position)
                 equalPosition(position)
             }
         } else {

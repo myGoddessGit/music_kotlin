@@ -16,8 +16,6 @@ import com.music.kotlinqq.R
 import com.music.kotlinqq.app.Constant
 import com.music.kotlinqq.bean.Album
 import com.music.kotlinqq.bean.SearchSong
-import com.music.kotlinqq.callback.OnAlbumItemClickListener
-import com.music.kotlinqq.callback.OnItemClickListener
 import com.music.kotlinqq.util.CommonUtil
 import com.music.kotlinqq.util.FileUtil
 import kotlinx.android.synthetic.main.recycler_album_item.view.*
@@ -39,12 +37,12 @@ class SearchContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private var mType : Int
 
     companion object{
-        private var mItemClick : OnItemClickListener? = null
-        private var mAlbumClick : OnAlbumItemClickListener? = null
-        fun setItemClick(itemClick : OnItemClickListener){
+        private var mItemClick : ((tag : Int) -> Unit)? = null
+        private var mAlbumClick :((tag : Int) -> Unit)? = null
+        fun setItemClick(itemClick : (tag : Int) -> Unit){
             mItemClick = itemClick
         }
-        fun setAlbumClick(albumClick : OnAlbumItemClickListener){
+        fun setAlbumClick(albumClick : (tag : Int) -> Unit){
             mAlbumClick = albumClick
         }
     }
@@ -119,7 +117,7 @@ class SearchContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 songHolder.mItemView.setBackgroundResource(R.color.transparent)
             }
             songHolder.mItemView.setOnRippleCompleteListener {
-                mItemClick!!.onClick(position)
+                mItemClick!!.invoke(position)
                 equalPosition(position)
             }
         } else {
@@ -135,7 +133,7 @@ class SearchContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>{
             CommonUtil.showStringColor(mSeek, albumList.singerName, albumHolder.singerName)
             CommonUtil.showStringColor(mSeek, albumList.publicTime, albumHolder.publicTime)
             albumHolder.item.setOnRippleCompleteListener {
-                mAlbumClick!!.onClick(position)
+                mAlbumClick!!.invoke(position)
             }
         }
     }

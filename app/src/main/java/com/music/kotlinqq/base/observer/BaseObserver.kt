@@ -70,23 +70,23 @@ open class BaseObserver<T> : ResourceObserver<T> {
         }
     }
 
-    protected fun unKnown(){
+    private fun unKnown(){
         baseView.showToast("未知错误")
     }
 
-    protected fun parseKnown(){
+    private fun parseKnown(){
         baseView.showToast("解析错误")
     }
 
-    protected fun httpError(){
+    private fun httpError(){
         baseView.showToast("网络错误")
     }
 
-    protected fun timeoutError(){
+    private fun timeoutError(){
         baseView.showToast("连接超时, 请重试")
     }
 
-    protected fun netWorkError(){
+    private fun netWorkError(){
         baseView.showToast("当前网络不可用, 请检查网络连接")
     }
 

@@ -2,10 +2,6 @@ package com.music.kotlinqq.app;
 
 import android.os.Environment;
 
-/**
- * Created by 残渊 on 2018/10/26.
- */
-
 public class Api {
     //根据歌手获取歌手图片的baseUrl
     public static final String SINGER_PIC_BASE_URL ="http://music.163.com/";

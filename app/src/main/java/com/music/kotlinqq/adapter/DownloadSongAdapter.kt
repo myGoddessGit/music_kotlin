@@ -10,7 +10,6 @@ import com.andexert.library.RippleView
 import com.music.kotlinqq.R
 import com.music.kotlinqq.app.App
 import com.music.kotlinqq.bean.DownloadSong
-import com.music.kotlinqq.callback.OnItemClickListener
 import com.music.kotlinqq.util.FileUtil
 import kotlinx.android.synthetic.main.footer_local_songs_item.view.*
 import kotlinx.android.synthetic.main.recycler_song_search_item.view.*
@@ -25,9 +24,10 @@ class DownloadSongAdapter(private val mDownloadSongList : MutableList<DownloadSo
     private val footerViewType = 1
     private val itemViewType = 0
     private var mLastPosition = -1
-    private var onItemClickListener : OnItemClickListener? = null
 
-    fun setOnItemClickListener(onItemClickListener: OnItemClickListener){
+    private var onItemClickListener : ((tag : Int) -> Unit)? = null
+
+    fun setOnItemClickListener(onItemClickListener: (tag : Int) -> Unit){
         this.onItemClickListener = onItemClickListener
     }
 
@@ -68,7 +68,7 @@ class DownloadSongAdapter(private val mDownloadSongList : MutableList<DownloadSo
             }
             holder.item.setOnRippleCompleteListener {
                 if (onItemClickListener != null){
-                    onItemClickListener!!.onClick(position)
+                    onItemClickListener!!.invoke(position)
                 }
                 equalPosition(position)
             }

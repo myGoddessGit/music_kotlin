@@ -67,26 +67,25 @@ class DownloadMusicFragment : AttachFragment(){
         mDownloadSongList = orderList(DownloadUtil.getSongFromFile(Api.STORAGE_SONG_FILE).toMutableList())
         songRecycle.layoutManager = layoutManager
         songRecycle.adapter = mAdapter
-        mAdapter.setOnItemClickListener(object : OnItemClickListener{
-            override fun onClick(position: Int) {
-                val downloadSong = mDownloadSongList[position]
-                val song = Song()
-                song.songId = downloadSong.songId
-                song.songName = downloadSong.name
-                song.singer = downloadSong.singer
-                song.isOnline = false
-                song.url = downloadSong.url
-                Log.i("thisDownload", downloadSong.url)
-                song.imgUrl = downloadSong.pic
-                song.position = position
-                song.duration = position.toLong()
-                song.listType = Constant.LIST_TYPE_DOWNLOAD
-                song.mediaId = downloadSong.mediaId
-                song.isDownload = true
-                FileUtil.saveSong(song)
-                mPlayStatusBinder!!.play(Constant.LIST_TYPE_DOWNLOAD)
-            }
-        })
+        mAdapter.setOnItemClickListener{
+            tag: Int ->
+            val downloadSong = mDownloadSongList[tag]
+            val song = Song()
+            song.songId = downloadSong.songId
+            song.songName = downloadSong.name
+            song.singer = downloadSong.singer
+            song.isOnline = false
+            song.url = downloadSong.url
+            Log.i("thisDownload", downloadSong.url)
+            song.imgUrl = downloadSong.pic
+            song.position = tag
+            song.duration = tag.toLong()
+            song.listType = Constant.LIST_TYPE_DOWNLOAD
+            song.mediaId = downloadSong.mediaId
+            song.isDownload = true
+            FileUtil.saveSong(song)
+            mPlayStatusBinder!!.play(Constant.LIST_TYPE_DOWNLOAD)
+        }
     }
 
     @Subscribe (threadMode = ThreadMode.MAIN)

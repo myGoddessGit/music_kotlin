@@ -12,13 +12,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
-
 import static com.music.kotlinqq.app.Constant.*;
+
 
 
 /**
  * <pre>
- *     author : 残渊
  *     time   : 2019/04/08
  *     desc   :
  * </pre>

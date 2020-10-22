@@ -11,7 +11,6 @@ import com.andexert.library.RippleView
 import com.music.kotlinqq.R
 import com.music.kotlinqq.app.Constant
 import com.music.kotlinqq.bean.HistorySong
-import com.music.kotlinqq.callback.OnItemClickListener
 import com.music.kotlinqq.util.FileUtil
 import kotlinx.android.synthetic.main.footer_local_songs_item.view.*
 import kotlinx.android.synthetic.main.recycler_song_search_item.view.*

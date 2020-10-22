@@ -3,7 +3,6 @@ package com.music.kotlinqq.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.music.kotlinqq.callback.OnItemClickListener
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.andexert.library.RippleView

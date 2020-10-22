@@ -139,21 +139,20 @@ class SearchContentFragment : BaseLoadingFragment<SearchContentPresenter>(), ISe
         mAdapter = SearchContentAdapter(mSongList, mSeek!!, attachActivity, Constant.TYPE_SONG)
         normalView.layoutManager = layoutManager
         normalView.adapter = mLRecyclerViewAdapter
-        SearchContentAdapter.setItemClick(object : OnItemClickListener{
-            override fun onClick(position: Int) {
-                val dataBean = mSongList[position]
-                val song = Song()
-                song.songId = dataBean.songmid
-                song.singer = getSinger(dataBean)
-                song.songName = dataBean.songname
-                song.imgUrl = Api.ALBUM_PIC + dataBean.albummid + Api.JPG
-                song.duration = dataBean.interval.toLong()
-                song.isOnline = true
-                song.mediaId = dataBean.strMediaMid
-                song.isDownload = DownloadUtil.isExistOfDownloadSong(dataBean.songmid)
-                mPresenters.getSongUrl(song)
-            }
-        })
+        SearchContentAdapter.setItemClick{
+            tag: Int ->
+            val dataBean = mSongList[tag]
+            val song = Song()
+            song.songId = dataBean.songmid
+            song.singer = getSinger(dataBean)
+            song.songName = dataBean.songname
+            song.imgUrl = Api.ALBUM_PIC + dataBean.albummid + Api.JPG
+            song.duration = dataBean.interval.toLong()
+            song.isOnline = true
+            song.mediaId = dataBean.strMediaMid
+            song.isDownload = DownloadUtil.isExistOfDownloadSong(dataBean.songmid)
+            mPresenters.getSongUrl(song)
+        }
     }
 
     override fun searchMoreSuccess(songListBeans: ArrayList<SearchSong.DataBean.SongBean.ListBean>) {
@@ -196,11 +195,10 @@ class SearchContentFragment : BaseLoadingFragment<SearchContentPresenter>(), ISe
         mAdapter = SearchContentAdapter(mAlbumList, mSeek!!, attachActivity, Constant.TYPE_ALBUM)
         normalView.layoutManager = layoutManager
         normalView.adapter = mLRecyclerViewAdapter
-        SearchContentAdapter.setAlbumClick(object : OnAlbumItemClickListener{
-            override fun onClick(position: Int) {
-                toAlbumContentFragment(mAlbumList[position])
-            }
-        })
+        SearchContentAdapter.setAlbumClick{
+            tag: Int ->
+            toAlbumContentFragment(mAlbumList[tag])
+        }
     }
 
     override fun searchAlbumMoreSuccess(songListBeans: List<Album.DataBean.AlbumBean.ListBean>) {

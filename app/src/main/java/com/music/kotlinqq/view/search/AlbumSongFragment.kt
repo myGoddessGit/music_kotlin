@@ -141,12 +141,13 @@ class AlbumSongFragment : BaseMvpFragment<AlbumSongPresenter>(), IAlbumSongContr
         normalView.addItemDecoration(MaterialViewPagerHeaderDecorator())
         normalView.adapter = mAdapter
         mAdapter!!.setSongClick{
-            val dataBean = songList[it]
+            tag: Int ->
+            val dataBean = songList[tag]
             val song = Song()
             song.songId = dataBean.songmid
             song.singer = getSinger(dataBean)
             song.songName = dataBean.songname
-            song.position = it
+            song.position = tag
             song.duration = dataBean.interval.toLong()
             song.isOnline = true
             song.listType = Constant.LIST_TYPE_ONLINE

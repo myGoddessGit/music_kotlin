@@ -117,22 +117,21 @@ class MainFragment : AttachFragment(){
         expand_lv_song_list.setOnGroupCollapseListener { if (it == 1) twoExpand = false } // 收缩
         expand_lv_song_list.setOnGroupClickListener { _, _, _, _ ->  false}
         // 二级列表的点击效果
-        mAdapter!!.setOnChildItemClickListener(object : OnChildItemClickListener{
-            override fun onClick(groupPosition: Int, childPosition: Int) {
-                if (groupPosition == 0 && childPosition == 0){
-                    replaceFragment(CollectionFragment())
-                } else if (groupPosition == 1){
-                    val albumCollection = mAlbumCollectionList[groupPosition][childPosition]
-                    replaceFragment(AlbumContentFragment.newInstance(
-                        albumCollection.albumId,
-                        albumCollection.albumName,
-                        albumCollection.albumPic,
-                        albumCollection.singerName,
-                        albumCollection.publicTime
-                    ))
-                }
+        mAdapter!!.setOnChildItemClickListener{
+            tag1: Int, tag2: Int ->
+            if (tag1 == 0 && tag2 == 0){
+                replaceFragment(CollectionFragment())
+            } else if (tag1 == 1){
+                val albumCollection = mAlbumCollectionList[tag1][tag2]
+                replaceFragment(AlbumContentFragment.newInstance(
+                    albumCollection.albumId,
+                    albumCollection.albumName,
+                    albumCollection.albumPic,
+                    albumCollection.singerName,
+                    albumCollection.publicTime
+                ))
             }
-        })
+        }
     }
 
     private fun replaceFragment(fragment : Fragment){
